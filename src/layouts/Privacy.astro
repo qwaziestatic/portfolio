@@ -1,0 +1,46 @@
+---
+// Layout for extension privacy policies. Used by Markdown files in src/pages/privacy/.
+import Base from "./Base.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<Base
+  title={`${frontmatter.extension} privacy policy`}
+  description={`How ${frontmatter.extension} handles your data.`}
+>
+  <article class="wrap policy">
+    <h1>{frontmatter.extension} privacy policy</h1>
+    <p class="updated">Last updated: {frontmatter.updated}</p>
+    <div class="policy-body">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .policy {
+    padding-block: 2.5rem 1rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    font-stretch: 118%;
+    margin-bottom: 0.5rem;
+  }
+  .updated {
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .policy-body {
+    max-width: var(--measure);
+  }
+  .policy-body :global(h2) {
+    font-size: 1.3rem;
+    margin: 2rem 0 0.6rem;
+  }
+  .policy-body :global(p),
+  .policy-body :global(ul) {
+    margin-bottom: 1rem;
+  }
+</style>

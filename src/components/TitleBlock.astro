@@ -1,0 +1,63 @@
+---
+// The corner box on an engineering drawing: who drew it, which revision, which sheet.
+interface Row {
+  label: string;
+  value: string;
+  wide?: boolean;
+}
+
+interface Props {
+  rows: Row[];
+  class?: string;
+}
+
+const { rows, class: className } = Astro.props;
+---
+
+<dl class:list={["title-block", className]}>
+  {
+    rows.map((row) => (
+      <div class:list={["cell", { wide: row.wide }]}>
+        <dt>{row.label}</dt>
+        <dd>{row.value}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  /* Grid lines are the 1px gaps between cells, so they stay correct for any mix of wide and half cells. */
+  .title-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin: 0;
+    background: var(--ink);
+    border: 1.5px solid var(--ink);
+    min-width: min(100%, 22rem);
+  }
+
+  .cell {
+    padding: 0.55rem 0.8rem 0.6rem;
+    background: var(--panel);
+  }
+
+  .cell.wide {
+    grid-column: 1 / -1;
+  }
+
+  dt {
+    font-size: 0.75rem;
+    font-stretch: 75%;
+    font-weight: 500;
+    color: var(--muted);
+    line-height: 1.2;
+  }
+
+  dd {
+    margin: 0.15rem 0 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+</style>

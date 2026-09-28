@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../config";
+---
+
+<Base title={`Contact: ${site.name}`} description={`Contact ${site.name}.`}>
+  <section class="wrap contact" aria-labelledby="contact-title">
+    <p class="back"><a href="/">Home</a></p>
+    <h1 id="contact-title">Contact</h1>
+    <p>Email is the quickest way to reach me.</p>
+    <dl>
+      <div><dt>Email</dt><dd><a href={`mailto:${site.email}`}>{site.email}</a></dd></div>
+      <div><dt>GitHub</dt><dd><a href={site.github} target="_blank" rel="noreferrer">{site.github}</a></dd></div>
+      {site.linkedin && <div><dt>LinkedIn</dt><dd><a href={site.linkedin} target="_blank" rel="noreferrer">{site.linkedin}</a></dd></div>}
+    </dl>
+  </section>
+</Base>
+
+<style>
+  .contact { padding-block: 2.5rem 6rem; }
+  .back { margin-bottom: 1.25rem; font-size: 0.9375rem; }
+  h1 { font-size: clamp(2.5rem, 7vw, 4.75rem); margin-bottom: 1rem; }
+  .contact > p:not(.back) { max-width: 44ch; font-size: 1.2rem; }
+  dl { max-width: 44rem; margin: 3rem 0 0; border-top: 1px solid var(--rule); }
+  dl div { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--rule); }
+  dt { color: var(--muted); }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  @media (max-width: 560px) { dl div { grid-template-columns: 1fr; gap: 0.25rem; } }
+</style>

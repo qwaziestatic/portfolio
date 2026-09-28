@@ -1,0 +1,53 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../config";
+import { certificates } from "../data/certificates";
+
+const formatDate = (iso: string) =>
+  new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", {
+    day: "numeric", month: "short", year: "numeric", timeZone: "UTC",
+  });
+---
+
+<Base title={`Certificates: ${site.name}`} description={`Certificates earned by ${site.name}.`}>
+  <section class="wrap section" aria-labelledby="certs-title">
+    <p class="back"><a href="/">Home</a></p>
+    <h1 id="certs-title">Certificates</h1>
+    <div class="table-scroll">
+      <table class="certs">
+        <thead><tr><th scope="col">Certificate</th><th scope="col">Issued by</th><th scope="col">Completed</th><th scope="col">Proof</th></tr></thead>
+        <tbody>
+          {certificates.map((c) => (
+            <tr>
+              <th scope="row"><span class="cert-title">{c.title}</span>{c.detail && <span class="cert-detail">{c.detail}</span>}</th>
+              <td>{c.issuer}</td>
+              <td class="nowrap"><time datetime={c.date}>{formatDate(c.date)}</time></td>
+              <td><div class="proof">{c.verifyUrl && <a href={c.verifyUrl} target="_blank" rel="noreferrer">Verify on Credly</a>}<a href={c.image} target="_blank" rel="noreferrer">View certificate</a>{c.serial && <span class="serial">Serial {c.serial}</span>}</div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .section { padding-block: 2.5rem 1rem; }
+  .back { margin-bottom: 1.25rem; font-size: 0.9375rem; }
+  h1 { font-size: clamp(2.5rem, 7vw, 4.75rem); margin-bottom: 2rem; }
+  .table-scroll { overflow-x: auto; }
+  .certs { width: 100%; border-collapse: collapse; font-size: 0.975rem; }
+  .certs thead th { text-align: left; font-size: 0.8125rem; font-weight: 500; color: var(--muted); padding: 0 1rem 0.6rem 0; border-bottom: 1.5px solid var(--ink); }
+  .certs tbody th, .certs td { text-align: left; vertical-align: top; padding: 1rem 1rem 1rem 0; border-bottom: 1px solid var(--rule); font-weight: 400; }
+  .cert-title { display: block; font-weight: 650; }
+  .cert-detail { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 0.2rem; max-width: 40ch; }
+  .nowrap { white-space: nowrap; }
+  .proof { display: flex; flex-direction: column; gap: 0.2rem; white-space: nowrap; }
+  .serial { color: var(--muted); font-size: 0.85rem; }
+  @media (max-width: 640px) {
+    .certs thead { position: absolute; left: -9999px; }
+    .certs tr { display: block; padding-block: 1rem; border-bottom: 1px solid var(--rule); }
+    .certs tbody th, .certs td { display: block; padding: 0.15rem 0; border: 0; }
+    .proof { flex-direction: row; flex-wrap: wrap; gap: 0.3rem 1rem; padding-top: 0.5rem; }
+  }
+</style>

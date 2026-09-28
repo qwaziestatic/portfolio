@@ -1,0 +1,156 @@
+/* Self-hosted fonts (SIL Open Font License, see public/fonts/). */
+@font-face {
+  font-family: "Archivo";
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans Ethiopic";
+  src: url("/fonts/noto-sans-ethiopic.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+  unicode-range: U+1200-137F;
+}
+
+/* A high-contrast black portfolio theme. */
+:root {
+  --paper: #000000;
+  --ink: #f5f5f5;
+  --muted: #a6a6a6;
+  --rule: #2f2f2f;
+  --trace: #8fb0ff;
+  --live: #63d391;
+  --wip: #f0b35a;
+  --panel: #111111;
+  --wash: #1b1b1b;
+  --shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.4);
+
+  --measure: 68ch;
+  --page: 72rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 1.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-stretch: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--trace);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--trace);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.15;
+  margin: 0;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 750;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+p {
+  margin: 0;
+}
+
+.wrap {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.native {
+  font-family: "Noto Sans Ethiopic", "Archivo", sans-serif;
+  font-stretch: 100%;
+}
+
+.brand,
+.project h3,
+.next a {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Status: a filled dot for working, a hollow dot for in progress. Shape carries meaning, not only colour. */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.9375rem;
+}
+
+.status::before {
+  content: "";
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  flex: none;
+}
+
+.status[data-tone="live"]::before {
+  background: var(--live);
+}
+
+.status[data-tone="wip"]::before {
+  border: 2px solid var(--wip);
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+}
+
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  background: var(--panel);
+  padding: 0.5rem 0.75rem;
+  z-index: 10;
+}

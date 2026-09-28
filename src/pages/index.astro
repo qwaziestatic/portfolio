@@ -1,0 +1,92 @@
+---
+import Base from "../layouts/Base.astro";
+import TitleBlock from "../components/TitleBlock.astro";
+import { site } from "../config";
+import { projects } from "../data/projects";
+
+const sheets = projects.length + 1;
+---
+
+<Base title={`${site.name}: portfolio`} description={site.intro}>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="trace" aria-hidden="true"></div>
+    <p id="hero-title" class="intro">{site.intro}</p>
+    <TitleBlock
+      class="hero-block"
+      rows={[
+        { label: "Title", value: "Portfolio", wide: true },
+        { label: "Drawn by", value: site.name },
+        { label: "Discipline", value: site.discipline },
+        { label: "Revision", value: site.revision },
+        { label: "Sheet", value: `1 of ${sheets}` },
+      ]}
+    />
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: 2.5rem clamp(3rem, 7vw, 5rem);
+  }
+
+  .trace {
+    position: relative;
+    height: 12px;
+    margin-block: 1.5rem;
+  }
+
+  .trace::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 12px;
+    top: 5px;
+    height: 2px;
+    background: var(--trace);
+    transform-origin: left center;
+  }
+
+  .trace::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--trace);
+    border-radius: 50%;
+    background: var(--paper);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .trace::before {
+      animation: draw 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
+    }
+
+    .trace::after {
+      animation: via 0.25s ease-out 1.25s both;
+    }
+  }
+
+  @keyframes draw {
+    from { transform: scaleX(0); }
+  }
+
+  @keyframes via {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+
+  .intro {
+    max-width: 44ch;
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    line-height: 1.5;
+  }
+
+  .hero-block {
+    width: min(100%, 34rem);
+    margin-top: 2rem;
+  }
+</style>
